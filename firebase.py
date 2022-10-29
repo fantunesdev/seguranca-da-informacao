@@ -40,15 +40,17 @@ while True:
 
     try:
         user_response = int(input('Selecione uma das opções acima: '))
-        user = input('Digite seu e-mail: ')
-        password = input('Digite a sua senha: ')
 
         if user_response == 1:
+            user = input('Digite seu e-mail: ')
+            password = input('Digite a sua senha: ')
             response = auth.create_user_with_email_and_password(user, password)
             print(Fore.GREEN + '\033[1m')
             print(f'E-mail {user} cadastrado com sucesso.')
             print('\033[0m' + Style.RESET_ALL)
         elif user_response == 2:
+            user = input('Digite seu e-mail: ')
+            password = input('Digite a sua senha: ')
             response = auth.sign_in_with_email_and_password(user, password)
             id_token = response['idToken']
             auth.send_email_verification(id_token)
@@ -56,6 +58,8 @@ while True:
             print(f'E-mail de verificação enviado para {user}. Se não encontrar, verifique na caixa de SPAM.')
             print(Style.RESET_ALL + '\033[0m')
         elif user_response == 3:
+            user = input('Digite seu e-mail: ')
+            password = input('Digite a sua senha: ')
             response = auth.sign_in_with_email_and_password(user, password)
             id_token = response['idToken']
             info = auth.get_account_info(id_token)
