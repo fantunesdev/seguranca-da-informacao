@@ -87,18 +87,23 @@ while True:
                 connection.send_message(message)
                 connection.quit()
 
-                verification_code = int(input(f'Digite o código de verificação enviado para o e-mail {user}: '))
+                try:
+                    verification_code = int(input(f'Digite o código de verificação enviado para o e-mail {user}: '))
 
-                if secret == verification_code:
-                    print(Fore.GREEN + '\033[1m')
-                    print('Email verificado com sucesso')
-                    print('Obrigado por usar nosso sistema! Volte sempre!')
-                    print('\033[0m' + Style.RESET_ALL)
-                    break
-                else:
+                    if secret == verification_code:
+                        print(Fore.GREEN + '\033[1m')
+                        print('Email verificado com sucesso')
+                        print('Obrigado por usar nosso sistema! Volte sempre!')
+                        print('\033[0m' + Style.RESET_ALL)
+                        break
+                    else:
+                        print(Fore.RED + '\033[1m')
+                        print('Código inválido. Tente novamente.')
+                        print('\033[0m' + Style.RESET_ALL)
+                except ValueError:
                     print(Fore.RED + '\033[1m')
-                    print('Código inválido. Tente novamente.')
-                    print('\033[0m' + Style.RESET_ALL)
+                    print('*** ATENÇÃO!! Você não digitou um número. Por favor, tente novamente ***')
+                    print(Style.RESET_ALL + '\033[0m')
             else:
                 print(Fore.RED + '\033[1m' + 'ATENÇÃO!!')
                 print(f'*** O e-mail {user} ainda não foi verificado. '
