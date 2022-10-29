@@ -3,7 +3,7 @@ import os
 import pyrebase
 from dotenv import load_dotenv
 
-import menu
+import system_messages
 
 load_dotenv()
 
@@ -25,7 +25,7 @@ class FirebaseRepository:
     def create_user(self, user):
         print('Criando usuário...')
         self.auth.create_user_with_email_and_password(user.email, user.password)
-        menu.print_success_message(f'E-mail {user.email} cadastrado com sucesso!')
+        system_messages.print_success_message(f'E-mail {user.email} cadastrado com sucesso!')
         self.validate_credentials(user)
 
     def validate_credentials(self, user):
@@ -38,11 +38,11 @@ class FirebaseRepository:
     def send_verification(self, user):
         self.verify_email(user)
         if user.is_verified():
-            menu.print_success_message('O e-mail já foi verificado anteriormente.')
+            system_messages.print_success_message('O e-mail já foi verificado anteriormente.')
         else:
             self.auth.send_email_verification(user.token)
             message = f'E-mail de verificação enviado para {user}. Se não encontrar, verifique na caixa de SPAM.'
-            menu.print_success_message(message)
+            system_messages.print_success_message(message)
 
     def verify_email(self, user):
         info = self.auth.get_account_info(user.token)
