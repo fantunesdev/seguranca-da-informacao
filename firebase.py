@@ -131,7 +131,7 @@ while True:
             print('*** ATENÇÃO!! O e-mail já foi cadastrado anteriormente. Por favor, tente novamente. ***')
         elif error_message == 'MISSING_PASSWORD':
             print('*** ATENÇÃO!! Você esqueceu de digitar uma senha. Por favor, tente novamente. ***')
-        elif error_message == 'WEAK_PASSWORD : Password should be at least 6 characters':
+        elif 'WEAK_PASSWORD' in error_message:
             print(f'*** ATENÇÃO!! A senha precisa ter pelo menos 6 caracteres. Por favor, tente novamente. ***')
         elif error_message == 'INVALID_PASSWORD':
             print('*** ATENÇÃO!! Os dados de login estão incorretos. Por favor, tente novamente. ***')
