@@ -5,7 +5,7 @@
 3) Autenticar o usuário no Firebase;
    * Antes de autenticar o usuário deve estar com o e-mail obrigatoriamente verificado;
    * Caso o email não esteja verificado não realizar a autenticação;
-* Quando o email já estiver verificado, autenticar o usuário no Firebase;
+   * Quando o email já estiver verificado, autenticar o usuário no Firebase;
 4) Após autenticar no Firebase vamos criar o mecanismo de controle de acesso;
 
     * Criar um arquivo texto pelo Python (arquivo “acesso.txt”);
