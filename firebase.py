@@ -1,15 +1,14 @@
 import json
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import os
 import random
 import smtplib
-
 import pyrebase
 import requests.exceptions
-
 from dotenv import load_dotenv
 from colorama import Fore, Style
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from Permissao import lasted_access
 
 load_dotenv()
 
@@ -90,6 +89,9 @@ while True:
                 try:
                     verification_code = int(input(f'Digite o código de verificação enviado para o e-mail {user}: '))
 
+                    if user is not None:
+                        lasted_access(user)
+
                     if secret == verification_code:
                         print(Fore.GREEN + '\033[1m')
                         print('Email verificado com sucesso')
@@ -113,6 +115,7 @@ while True:
             print()
             print('Obrigado por usar nosso sistema! Volte sempre!')
             break
+
         else:
             raise ValueError
 
@@ -141,4 +144,4 @@ while True:
             print(error_message)
 
         print(Style.RESET_ALL + '\033[0m')
-
+  
