@@ -26,7 +26,6 @@ class FirebaseRepository:
         print('Criando usuário...')
         self.auth.create_user_with_email_and_password(user.email, user.password)
         system_messages.print_success_message(f'E-mail {user.email} cadastrado com sucesso!')
-        self.validate_credentials(user)
 
     def validate_credentials(self, user):
         response = self.auth.sign_in_with_email_and_password(user.email, user.password)

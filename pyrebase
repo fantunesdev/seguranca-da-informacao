@@ -1,0 +1,3 @@
+#!/bin/bash
+source /home/fernando/git/ads/seguranca-da-informacao/venv/bin/activate
+python /home/fernando/git/ads/seguranca-da-informacao/main.py

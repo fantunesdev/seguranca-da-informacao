@@ -8,7 +8,8 @@ def print_menu():
     print()
     print('1 - Cadastrar usuário.')
     print('2 - Verificar e-mail.')
-    print('3 - Autenticar Usuário.')
+    print('3 - Login com autenticação multi-fator.')
+    print('4 - Manipular arquivo e permissões')
     print('9 - Encerrar.')
     print()
 

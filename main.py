@@ -1,7 +1,7 @@
 import json
 import requests.exceptions
 
-from repositories import firebase_repository, smtp_repository
+from repositories import firebase_repository, smtp_repository, os_repository
 from entities.user import User
 import system_messages
 
@@ -9,6 +9,7 @@ user = User(
     email=None,
     password=None,
     verified=False,
+    is_authenticated=False,
     token=None,
     menu_response=None
 )
@@ -23,43 +24,34 @@ while True:
             user.set_credentials()
             repository_firebase.create_user(user)
         elif user.menu_response == 2:
-            if user.is_credentials_valid():
-                repository_firebase.send_verification(user)
-            else:
-                system_messages.print_error_message('Suas credenciais não são válidas. '
-                                                    'Entre com seus dados e tente novamente.')
-                user.set_credentials()
-                repository_firebase.validate_credentials(user)
+            user.set_credentials()
+            repository_firebase.validate_credentials(user)
+            repository_firebase.send_verification(user)
         elif user.menu_response == 3:
-            if user.is_credentials_valid():
-                repository_firebase.verify_email(user)
-                if user.is_verified():
-                    print('Segundo fator de autentificação.')
-                    secret = smtp_repository.send_second_factor_authentication_email(user)
-                    try:
-                        verification_code = int(input(f'Digite o código de verificação enviado para o e-mail {user}: '))
-                        if secret == verification_code:
-                            message = 'Email verificado com sucesso! \nObrigado por usar nosso sistema! Volte sempre!'
-                            system_messages.print_success_message(message)
-                            break
-                        else:
-                            system_messages.print_error_message('Código inválido. Tente novamente.')
-                    except ValueError:
-                        system_messages.print_error_message('Você não digitou um número. Por favor, tente novamente!')
-                else:
-                    message = f'O e-mail {user} ainda não foi verificado. \n' \
-                              f'Por favor, faça a verificação e tente novamente.'
-                    system_messages.print_error_message(message)
+            user.set_credentials()
+            repository_firebase.validate_credentials(user)
+            repository_firebase.verify_email(user)
+            if user.is_verified():
+                print('Segundo fator de autentificação.')
+                secret = smtp_repository.send_second_factor_authentication_email(user)
+                try:
+                    verification_code = int(input(f'Digite o código de verificação enviado para o e-mail {user}: '))
+                    if secret == verification_code:
+                        user.is_authenticated = True
+                        system_messages.print_success_message('Login realizado com sucesso')
+                    else:
+                        system_messages.print_error_message('Código inválido. Tente novamente.')
+                except ValueError:
+                    system_messages.print_error_message('Você não digitou um número. Por favor, tente novamente!')
             else:
-                system_messages.print_error_message('Você não está logado, entre com as credenciais e tente novamente.')
-                user.set_credentials()
-                repository_firebase.validate_credentials(user)
+                message = f'O e-mail {user} ainda não foi verificado. \n' \
+                          f'Por favor, faça a verificação e tente novamente.'
+                system_messages.print_error_message(message)
         elif user.menu_response == 4:
-            print(f'Usuário: {user.email}\n'
-                  f'Password: {user.password}\n'
-                  f'Verified: {user.verified}\n'
-                  f'Is verified: {user.is_verified()}\n'
-                  f'Token: {user.token}\n')
+            if user.credentials_are_valid() and user.is_authenticated:
+                os_repository.lasted_access(user.email)
+            else:
+                system_messages.print_error_message('É necessário realizar o login antes de continuar.')
         elif user.menu_response == 9:
             system_messages.print_success_message('Obrigado por usar nosso sistema! Volte sempre!')
             break
