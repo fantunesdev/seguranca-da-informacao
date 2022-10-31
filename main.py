@@ -64,10 +64,10 @@ while True:
         else:
             raise ValueError
 
-    except ValueError:
+    except ValueError:  # Tratamento de erro para opções de menu inválidas
         system_messages.print_error_message('Você não digitou uma opção válida. Por favor, tente novamente!')
 
-    except requests.exceptions.HTTPError as HTTPError:
+    except requests.exceptions.HTTPError as HTTPError:  # Tratamentos de erros da API do Firebase
         response = json.loads(HTTPError.strerror)
         error_message = response['error']['message']
 
