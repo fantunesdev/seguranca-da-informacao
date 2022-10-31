@@ -19,6 +19,10 @@ class User:
         return self.__password
 
     def set_credentials(self):
+        """
+        Lê as credenciais de usuário a partir do teclado.
+        :return:
+        """
         self.__email = input('Digite seu e-mail: ')
         self.__password = input('Digite a sua senha (deve ter no mínimo 6 caracteres): ')
 
