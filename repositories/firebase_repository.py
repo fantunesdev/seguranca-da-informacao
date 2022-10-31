@@ -46,7 +46,6 @@ class FirebaseRepository:
         response = self.auth.sign_in_with_email_and_password(user.email, user.password)  # guarda a resposta da conexão
         user.token = response['idToken']  # Seta o atributo token da instância User
         self.verify_email(user)  # Checa se o e-mail já foi verificado
-        print(f'Primeira etapa realizada com sucesso. Você está usando as credenciais do e-mail {user.email}.')
         return response
 
     def send_verification(self, user):

@@ -34,8 +34,9 @@ while True:
             repository_firebase.validate_credentials(user)
             repository_firebase.verify_email(user)
             if user.is_verified():  # Checa se o e-mail já foi verificado
-                print('Segundo fator de autentificação.')
-                secret = smtp_repository.send_second_factor_authentication_email(user)  # gera o secret e envia por email
+                print(f'Primeira etapa realizada com sucesso.')
+                print('Iniciando segundo fator de autentificação.')
+                secret = smtp_repository.send_second_factor_authentication_email(user)  # gera o secret, envia por email
                 try:
                     # Lê a partir do teclado o código de verificação enviado por e-mail
                     verification_code = int(input(f'Digite o código de verificação enviado para o e-mail {user}: '))

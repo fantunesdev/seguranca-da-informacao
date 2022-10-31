@@ -10,9 +10,9 @@ def lasted_access(user_email: str):
     """
 
     # * Verifica se o arquivo existe
-    if os.path.isfile(f"{user_email}.txt"):
+    if os.path.isfile(f"historico-{user_email}.txt"):
         print(f'O arquivo historico-{user_email}.txt já existe. Atribuindo permissões de escrita.')
-        os.chmod(f"{user_email}.txt", stat.S_IRWXU)  # Modifica a permissão do arquivo para leitura, escrita e execução
+        os.chmod(f"historico-{user_email}.txt", stat.S_IRWXU)  # Modifica a permissão do arquivo para leitura, escrita e execução
 
     # * Abre o arquivo para escrita
     with open(f'historico-{user_email}.txt', 'a', encoding='utf-8') as archive:
